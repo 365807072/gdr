@@ -1,0 +1,188 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li>任务提交详情</li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('Member/detailPost')}">
+
+        <div><input type="hidden" name="id" value="{$info.id}"></div>
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label">用户名称:</label>
+            <div class="col-md-6 col-sm-10" style="margin-top:7px">
+                <span>{$info.user_nickname}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label">保证金:</label>
+            <div class="col-md-6 col-sm-10" style="margin-top:7px">
+                <span class="label label-warning">{$info.personal_deposit}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label">目前状态:</label>
+            <div class="col-md-6 col-sm-10" style="margin-top:7px">
+                <td>
+                    <switch name="$info.personal_status">
+                        <case value="0">
+                            <span class="label label-warning">未审核</span>
+                        </case>
+                        <case value="1">
+                            <span class="label label-success">审核通过</span>
+                        </case>
+                        <case value="2">
+                            <span class="label label-danger">审核不通过</span>
+                        </case>
+                    </switch>
+                </td>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label">提交任务时间:</label>
+            <div class="col-md-6 col-sm-10" style="margin-top:7px">
+                <if condition="!empty($info['personal_upload_date'])">
+                    <span>{:date('Y-m-d H:i',$info['personal_upload_date'])}</span>
+                    <else/>
+                    <span>无</span>
+                </if>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label">自拍照:</label>
+            <div class="col-md-6 col-sm-10" style="margin-top:7px">
+                <if condition="!empty($info['image'])">
+                    <img src="{$info.image}" class="pimg" >
+                    <else/>
+                    <span>无</span>
+                </if>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label">身份证正面:</label>
+            <div class="col-md-6 col-sm-10" style="margin-top:7px">
+                <if condition="!empty($info['image'])">
+                    <img src="{$info.image}" class="pimg" >
+                    <else/>
+                    <span>无</span>
+                </if>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label">身份证反面:</label>
+            <div class="col-md-6 col-sm-10" style="margin-top:7px">
+                <if condition="!empty($info['image'])">
+                    <img src="{$info.image}" class="pimg" >
+                    <else/>
+                    <span>无</span>
+                </if>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label">手持身份证:</label>
+            <div class="col-md-6 col-sm-10" style="margin-top:7px">
+                <if condition="!empty($info['image'])">
+                    <img src="{$info.image}" class="pimg" >
+                    <else/>
+                    <span>无</span>
+                </if>
+            </div>
+        </div>
+
+        <div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2;width:100%;height:100%;display:none;">
+            <div id="innerdiv" style="position:absolute; ">
+                <img id="bigimg" style="border:5px solid #fff;" src="" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <if condition="$info['personal_status'] eq 0">
+                    <div class="col-md-6 col-sm-10">
+
+                        <div class="radio-inline" >
+                            <input value="1" name="personal_status" id="member_check1" type="radio" <if condition="$info['personal_status'] eq 1">checked</if>>
+                            <label for="member_check1" style="font-weight:normal;!important">通过</label>
+                        </div>
+                        <div class="radio-inline" >
+                            <input value="2" name="personal_status" id="member_check2" type="radio" <if condition="$info['personal_status'] eq 2">checked</if>>
+                            <label for="member_check2" style="font-weight:normal;!important">不通过</label>
+                        </div>
+                    </div>
+                </if>
+
+                <if condition="$info['personal_status'] eq 1">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" style="color: red">已通过审核!!</label>
+                    </div>
+                </if>
+                <if condition="$info['personal_status'] eq 2">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" style="color: #cccccc">该兼职审核不通过!!</label>
+                    </div>
+                </if>
+            </div>
+        </div>
+
+
+
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary js-ajax-submit">{:lang("SAVE")}</button>
+            <a class="btn btn-default" href="{:url('member/check')}">返回</a>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+
+    $(function(){
+        $(".pimg").click(function(){
+            var _this = $(this); //将当前的pimg元素作为_this传入函数
+            imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+        });
+    });
+
+    function imgShow(outerdiv, innerdiv, bigimg, _this) {
+        var src = _this.attr("src"); //获取当前点击的pimg元素中的src属性
+        $(bigimg).attr("src", src); //设置#bigimg元素的src属性
+
+        /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+        $("<img/>").attr("src", src).load(function () {
+            var windowW = $(window).width();//获取当前窗口宽度
+            var windowH = $(window).height();//获取当前窗口高度
+            var realWidth = this.width;//获取图片真实宽度
+            var realHeight = this.height;//获取图片真实高度
+            var imgWidth, imgHeight;
+            var scale = 0.8;//缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+            if (realHeight > windowH * scale) { //判断图片高度
+                imgHeight = windowH * scale; //如大于窗口高度，图片高度进行缩放
+                imgWidth = imgHeight / realHeight * realWidth;//等比例缩放宽度
+                if (imgWidth > windowW * scale) { //如宽度扔大于窗口宽度
+                    imgWidth = windowW * scale; //再对宽度进行缩放
+                }
+            } else if (realWidth > windowW * scale) { //如图片高度合适，判断图片宽度
+                imgWidth = windowW * scale; //如大于窗口宽度，图片宽度进行缩放
+                imgHeight = imgWidth / realWidth * realHeight; //等比例缩放高度
+            } else { //如果图片真实高度和宽度都符合要求，高宽不变
+                imgWidth = realWidth;
+                imgHeight = realHeight;
+            }
+            $(bigimg).css("width", imgWidth) ;//以最终的宽度对图片缩放
+
+            var w = (windowW - imgWidth) / 2; //计算图片与窗口左边距
+            var h = (windowH - imgHeight) / 2; //计算图片与窗口上边距
+            $(innerdiv).css({"top": h, "left": w}); //设置#innerdiv的top和left属性
+            $(outerdiv).fadeIn("fast"); //淡入显示#outerdiv及.pimg
+        });
+
+        $(outerdiv).click(function () { //再次点击淡出消失弹出层
+            $(this).fadeOut("fast");
+        });
+
+    }
+</script>
+</body>
+</html>

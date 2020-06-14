@@ -1,0 +1,100 @@
+<link rel="stylesfa-photoet"
+      href="../../../simpleboot3/public/assets/simpleboot3/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+      href="../../../simpleboot3/public/assets/simpleboot3/font-awesome/4.4.0/css/font-awesome-ie7.min.css">
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('Member/check')}">用户认证</a></li>
+        <li class="active"><a href="{:url('member/check_detail', ['id' => $info.id])}">详情页</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form margin-top-20" >
+        <div><input type="hidden" name="id" value="{$info.id}"></div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">会员昵称:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" name="user_nickname" value="{$info.user_nickname}" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label">头像:</label>
+            <div class="col-md-6 col-sm-10" style="margin-top:7px">
+                <img src="{$info.avatar}" style="width: 80px;height: 80px;margin-left: 19px">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label">个人认证状态:</label>
+            <div class="col-md-6 col-sm-10" style="margin-top:7px">
+                <td>
+                    <switch name="$info.personal_status">
+                        <case value="0">
+                            <span class="label label-warning">未审核</span>
+                        </case>
+                        <case value="1">
+                            <span class="label label-success">审核通过</span>
+                        </case>
+                        <case value="2">
+                            <span class="label label-danger">审核不通过</span>
+                        </case>
+                    </switch>
+                </td>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">个人认证保证金:</label>
+            <if condition="$info['business_status'] eq 1">
+            <div class="col-md-6 col-sm-10" >
+                <div style="margin-top: 5px;font-size: 16px"><strong style="color:#ff0000;">{$info.personal_deposit}</strong>&nbsp;元</div>
+            </div>
+            </if>
+        </div>
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label">工商认证状态:</label>
+            <div class="col-md-6 col-sm-10" style="margin-top:7px">
+                <td>
+                    <switch name="$info.business_status">
+                        <case value="0">
+                            <span class="label label-warning">未审核</span>
+                        </case>
+                        <case value="1">
+                            <span class="label label-success">审核通过</span>
+                        </case>
+                        <case value="2">
+                            <span class="label label-danger">审核不通过</span>
+                        </case>
+                    </switch>
+                </td>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">工商认证保证金:</label>
+            <if condition="$info['business_status'] eq 1">
+            <div class="col-md-6 col-sm-10" >
+                <div style="margin-top: 5px;font-size: 16px"><strong style="color:#ff0000;">{$info.business_deposit}</strong>&nbsp;元</div>
+            </div>
+            </if>
+        </div>
+        </if>
+        <div class="col-sm-offset-2 col-sm-10">
+            <a class="btn btn-default" href="{:url('Member/check')}">返回</a>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+<script>
+
+    //设置属性类型默认选中
+    $('input[name="sex"][value="'+sex+'"]').attr('radio',true);
+
+    //设置用户状态默认选中
+    $('input[name="user_status"][value="'+user_status+'"]').attr('radio',true);
+</script>
+</html>

@@ -1,0 +1,119 @@
+<include file="public@header"/>
+<style>
+    td{text-align: center}
+</style>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('Member/index')}">用户管理</a></li>
+    </ul>
+
+    <form class="well form-inline margin-top-20" method="post" action="{:url('job/job/report')}">
+
+        关键字：
+        <input class="form-control" type="text" name="keyword" style="width: 200px;" value="{:input('request.keyword')}"
+               placeholder="请输入要搜索的兼职标题">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('job/report')}">清空</a>
+    </form>
+
+
+    <form method="post" class="js-ajax-form">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th align="left" abbr="user_id" axis="col3" class="">
+                    <div style="text-align: center; width: 100%;" class="">编号</div>
+                </th>
+                <th align="left" abbr="nickname" axis="col4" class="">
+                    <div style="text-align: center; width:  100%;" class="">被举报兼职标题</div>
+                </th>
+                <th align="left" abbr="nickname" axis="col4" class="">
+                    <div style="text-align: center; width:  100%;" class="">被举报发布人</div>
+                </th>
+                <th align="left" abbr="nickname" axis="col4" class="">
+                    <div style="text-align: center; width:  100%;" class="">被举报类型</div>
+                </th>
+                <th align="left" abbr="nickname" axis="col4" class="">
+                    <div style="text-align: center; width:  100%;" class="">此用户累计违规次数</div>
+                </th>
+                <th align="left" abbr="nickname" axis="col4" class="">
+                    <div style="text-align: center; width:  100%;" class="">举报时间</div>
+                </th>
+                <th align="center" axis="col1" class="">
+                    <div style="text-align: center; width:  100%;">{:lang('STATUS')}</div>
+                </th>
+                <th align="center" axis="col1" class="">
+                    <div style="text-align: center; width:  100%;">操作</div>
+                </th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <php>
+                $user_statuses=array("0"=>lang('拉黑'),"1"=>lang('正常'),"2"=>lang('未验证'));
+            </php>
+            <foreach name="list" item="vo" key="k" >
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.title}</td>
+                    <td>{$vo.user_nickname}</td>
+                    <td>
+                        <switch name="vo.report_type">
+                            <case value="1">
+                                <span class="label label-danger">色情内容</span>
+                            </case>
+                            <case value="2">
+                                <span class="label label-danger">诈骗内容</span>
+                            </case>
+                            <case value="3">
+                                <span class="label label-danger">垃圾信息发布</span>
+                            </case>
+                            <case value="4">
+                                <span class="label label-danger">其他违法信息</span>
+                            </case>
+                        </switch>
+                    </td>
+                    <td>{$vo.report_more}</td>
+
+                    <td>{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
+                    <td>
+                        <switch name="vo.user_status">
+                            <case value="0">
+                                <span class="label label-danger">{$user_statuses[$vo['user_status']]}</span>
+                            </case>
+                            <case value="1">
+                                <span class="label label-success">{$user_statuses[$vo['user_status']]}</span>
+                            </case>
+                            <case value="2">
+                                <span class="label label-warning">{$user_statuses[$vo['user_status']]}</span>
+                            </case>
+                        </switch>
+                    </td>
+                    <td>
+                        <gt name="vo.id" value="0">
+                            <a class="btn btn-xs label label-danger" href="{:url('job/reportDelete', ['id' => $vo.id])}">客服删除兼职按钮</a>
+                            <empty name="vo.user_status">
+                                <a class="btn btn-xs btn-success js-ajax-dialog-btn"
+                                   href="{:url('job/cancelban',array('id'=>$vo['id']))}"
+                                   data-msg="{:lang('确定要启次用户吗')}">{:lang('启用')}</a>
+                                <else/>
+                                <a class="btn btn-xs label label-danger js-ajax-dialog-btn"
+                                   href="{:url('job/ban',array('id'=>$vo['id']))}"
+                                   data-msg="{:lang('确定要拉黑此用户吗')}">{:lang('拉黑')}</a>
+                            </empty>
+                            <else/>
+                            <a class="btn btn-xs btn-warning disabled">{:lang('BLOCK_USER')}</a>
+                        </gt>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

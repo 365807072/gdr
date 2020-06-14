@@ -1,0 +1,75 @@
+<include file="public@header"/>
+<style>
+    td{text-align: center}
+</style>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('Member/index')}">用户管理</a></li>
+    </ul>
+
+    <form class="well form-inline margin-top-20" method="post" action="{:url('temporaryworker/worker/index')}">
+
+        关键字：
+        <input class="form-control" type="text" name="keyword" style="width: 200px;" value="{:input('request.keyword')}"
+               placeholder="请输入要搜索的用户名">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('worker/index')}">清空</a>
+    </form>
+
+
+    <form method="post" class="js-ajax-form">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th align="left" abbr="user_id" axis="col3" class="">
+                    <div style="text-align: center; width: 100%;" class="">ID</div>
+                </th>
+                <th align="left" abbr="worker_name" axis="col4" class="">
+                    <div style="text-align: center; width:  100%;" class="">临时工名称</div>
+                </th>
+                <th align="left" abbr="title" axis="col4" class="">
+                    <div style="text-align: center; width:  100%;" class="">临时工工种</div>
+                </th>
+                <th align="left" abbr="money" axis="col4" class="">
+                    <div style="text-align: center; width:  100%;" class="">临时工金额</div>
+                </th>
+                <th align="left" abbr="address" axis="col4" class="">
+                    <div style="text-align: center; width:  100%;" class="">工作地址</div>
+                </th>
+                <th align="left" abbr="starttime" axis="col4" class="">
+                    <div style="text-align: center; width:  100%;" class="">工作时间</div>
+                </th>
+                <th align="left" abbr="boss_name" axis="col4" class="">
+                    <div style="text-align: center; width:  100%;" class="">雇主名称</div>
+                </th>
+                <th align="left" abbr="create_time" axis="col4" class="">
+                    <div style="text-align: center; width:  100%;" class="">发布时间</div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <php>
+                $user_statuses=array("0"=>lang('拉黑'),"1"=>lang('正常'),"2"=>lang('未验证'));
+            </php>
+            <foreach name="list" item="vo" key="k" >
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.worker_name}</td>
+                    <td>{$vo.title}</td>
+                    <td>{$vo.money}</td>
+                    <td>{$vo.address}</td>
+                    <td>{:date('Y-m-d H:i:s',$vo['starttime'])}</td>
+                    <td>{$vo.boss_name}</td>
+                    <td>{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

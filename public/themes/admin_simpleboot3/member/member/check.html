@@ -1,0 +1,104 @@
+<include file="public@header"/>
+<style>
+    td{text-align: center}
+</style>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('Member/index')}">用户认证</a></li>
+    </ul>
+
+    <form class="well form-inline margin-top-20" method="get" action="{:url('Member/check')}">
+        个人认证状态:
+        <select class="form-control" name="personal_status" style="width: 140px;">
+            <option value=""  <if condition="$personal_status eq ''">selected</if>>全部</option>
+            <option value="0" <if condition="$personal_status heq '0'">selected</if>>未审核</option>
+            <option value="1" <if condition="$personal_status eq '1'">selected</if>>审核通过</option>
+            <option value="2" <if condition="$personal_status eq 2">selected</if>>审核不通过</option>
+        </select>
+
+        关键字:
+        <input type="text" class="form-control" name="keyword" style="width: 200px;"
+               value="{$keyword|default=''}" placeholder="请输入关键字...">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('Member/check')}">清空</a>
+    </form>
+
+
+    <form method="post" class="js-ajax-form">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th align="left" abbr="user_id" axis="col3" class="">
+                    <div style="text-align: center; width: 100%;" class="">编号</div>
+                </th>
+                <th align="left" abbr="nickname" axis="col4" class="">
+                    <div style="text-align: center; width:  100%;" class="">用户名</div>
+                </th>
+                <th align="left" abbr="nickname" axis="col4" class="">
+                    <div style="text-align: center; width:  100%;" class="">个人认证状态</div>
+                </th>
+                <th align="center" ab   br="mobile" axis="col6" class="">
+                    <div style="text-align: center; width:  100%;" class="">工商认证状态</div>
+                </th>
+                <th align="center" axis="col1" class="">
+                    <div style="text-align: center; width:  100%;">操作</div>
+                </th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo" key="k" >
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.user_nickname}</td>
+                    <td>
+                        <switch name="$vo.personal_status">
+                            <case value="0">
+                                <span class="label label-warning">未审核</span>
+                            </case>
+                            <case value="1">
+                                <span class="label label-success">审核通过</span>
+                            </case>
+                            <case value="2">
+                                <span class="label label-danger">审核不通过</span>
+                            </case>
+                            <default>
+                                <span class="label label-danger">未认证</span>
+                            </default>
+                        </switch>
+                    </td>
+                    <td>
+                        <switch name="$vo.business_status">
+                            <case value="0">
+                                <span class="label label-warning">未审核</span>
+                            </case>
+                            <case value="1">
+                                <span class="label label-success">审核通过</span>
+                            </case>
+                            <case value="2">
+                                <span class="label label-danger">审核不通过</span>
+                            </case>
+                            <default>
+                                <span class="label label-danger">未认证</span>
+                            </default>
+                        </switch>
+                    </td>
+
+                    <td>
+                        <a href="{:url('member/check_detail', ['id' => $vo.id])}" style="margin-right: 20px;">查看详情</a>
+                        <a href="{:url('member/personal_check', ['id' => $vo.id])}" style="margin-right: 20px;">个人认证审核</a>
+                        <a href="{:url('member/business_check', ['id' => $vo.id])}">工商认证审核</a>
+                    </td>
+                </tr>
+
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

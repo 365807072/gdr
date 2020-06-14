@@ -1,0 +1,173 @@
+<link rel="stylesfa-photoet"
+      href="../../../simpleboot3/public/assets/simpleboot3/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+      href="../../../simpleboot3/public/assets/simpleboot3/font-awesome/4.4.0/css/font-awesome-ie7.min.css">
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('job/index')}">兼职管理</a></li>
+        <li class="active"><a href="{:url('job/detail', ['id' => $info.id])}">兼职详情页</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('job/detailPost')}">
+        <div><input type="hidden" name="id" value="{$info.id}"></div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">发布人昵称:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" name="user_nickname" value="{$info.user_nickname}" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label">头像:</label>
+            <div class="col-md-6 col-sm-10" style="margin-top:7px">
+                <img src="{$info.avatar}" style="width: 80px;height: 80px">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">联系电话:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" name="phone" value="{$info.phone}" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">结算方式:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <td>
+                        <switch name="$info.type">
+                            <case value="1">
+                                <span class="label label-warning">天</span>
+                            </case>
+                            <case value="2">
+                                <span class="label label-warning">次</span>
+                            </case>
+                            <case value="3">
+                                <span class="label label-warning">件</span>
+                            </case>
+                        </switch>
+                    </td>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">需求人员:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" name="person" value="{$info.person}" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">单价:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" name="money" value="{$info.money}" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">总额:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" name="money" value="{$info.total}" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">工作地址:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" name="address" value="{$info.address}" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">展示图片:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <notempty name="info.picture">
+                        <a href="javascript:parent.imagePreviewDialog('{:cmf_get_image_preview_url($info.picture)}');">
+                            <i class="fa fa-photo fa-fw"></i>
+                        </a>
+                        <else/>
+                        <i class="fa fa-close fa-fw"></i>
+                    </notempty>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">工作内容:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" name="content" value="{$info.content}" disabled>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">工作要求:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" name="hope" value="{$info.hope}" disabled>
+                </div>
+            </div>
+        </div>
+
+        <!--
+       <div class="form-group">
+           <div class="col-sm-offset-2 col-sm-10">
+               <if condition="$info['status'] eq 0">
+                   <div class="col-md-6 col-sm-10">
+
+                       <div class="radio-inline" >
+                           <input value="1" name="status" id="job_check1" type="radio" <if condition="$info.status eq 1">checked</if>>
+                           <label for="job_check1" style="font-weight:normal;!important">通过</label>
+                       </div>
+                       <div class="radio-inline" >
+                           <input value="2" name="status" id="job_check2" type="radio" <if condition="$info.status eq 2">checked</if>>
+                           <label for="job_check2" style="font-weight:normal;!important">不通过</label>
+                       </div>
+                   </div>
+               </if>
+
+
+               <if condition="$info['status'] eq 1">
+                   <div class="form-group">
+                       <label class="col-sm-2 control-label" style="color: red">已通过审核!!</label>
+                   </div>
+               </if>
+               <if condition="$info['status'] eq 2">
+                   <div class="form-group">
+                       <label class="col-sm-2 control-label" style="color: #cccccc">该兼职审核不通过!!</label>
+                   </div>
+               </if>
+           </div>
+       </div>
+        !-->
+
+
+       <div class="col-sm-offset-2 col-sm-10">
+
+           <!--
+          <if condition="$info['status'] eq 0">
+              <button type="submit" class="btn btn-primary js-ajax-submit">{:lang("SAVE")}</button>
+          </if>
+           <!-->
+
+          <a class="btn btn-default" href="__URL__">返回</a>
+      </div>
+  </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,192 @@
+<link rel="stylesfa-photoet"
+      href="../../../simpleboot3/public/assets/simpleboot3/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+      href="../../../simpleboot3/public/assets/simpleboot3/font-awesome/4.4.0/css/font-awesome-ie7.min.css">
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('Member/index')}">会员管理</a></li>
+        <li class="active"><a href="{:url('member/detail', ['id' => $info.id])}">详情页</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form margin-top-20" >
+        <div><input type="hidden" name="id" value="{$info.id}"></div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">会员昵称:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" name="user_nickname" value="{$info.user_nickname}" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label">头像:</label>
+            <div class="col-md-6 col-sm-10" style="margin-top:7px">
+                <img src="{$info.avatar}" style="width: 80px;height: 80px;margin-left: 19px">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">年龄:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" name="age" value="{$info.age}" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">学历:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <switch name="$info.degree">
+                        <case value="1">
+                            <input type="text" class="form-control" name="age" value="小学" disabled>
+                        </case>
+                        <case value="2">
+                            <input type="text" class="form-control" name="age" value="初中" disabled>
+                        </case>
+                        <case value="3">
+                            <input type="text" class="form-control" name="age" value="高中" disabled>
+                        </case>
+                        <case value="4">
+                            <input type="text" class="form-control" name="age" value="大专" disabled>
+                        </case>
+                        <case value="5">
+                            <input type="text" class="form-control" name="age" value="本科" disabled>
+                        </case>
+                        <case value="6">
+                            <input type="text" class="form-control" name="age" value="硕士" disabled>
+                        </case>
+                    </switch>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">主要职业:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" name="job" value="{$info.job}" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">在职企业:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" name="enterprise" value="{$info.enterprise}" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">联系电话:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" name="telephone" value="{$info.telephone}" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">个人认证状态:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <td>
+                        <switch name="$info.personal_status">
+                            <case value="0">
+                                <span class="label label-warning">未审核</span>
+                            </case>
+                            <case value="1">
+                                <span class="label label-success">审核通过</span>
+                            </case>
+                            <case value="2">
+                                <span class="label label-danger">审核不通过</span>
+                            </case>
+                        </switch>
+                    </td>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">个人认证保证金:</label>
+            <div class="col-md-6 col-sm-10" >
+                <div style="margin-top: 5px;font-size: 16px"><strong style="color:#ff0000;">{$info.personal_deposit}</strong>&nbsp;元</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">工商认证状态:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <td>
+                        <switch name="$info.business_status">
+                            <case value="0">
+                                <span class="label label-warning">未审核</span>
+                            </case>
+                            <case value="1">
+                                <span class="label label-success">审核通过</span>
+                            </case>
+                            <case value="2">
+                                <span class="label label-danger">审核不通过</span>
+                            </case>
+                        </switch>
+                    </td>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">工商认证保证金:</label>
+            <div class="col-md-6 col-sm-10" >
+                <div style="margin-top: 5px;font-size: 16px"><strong style="color:#ff0000;">{$info.business_deposit}</strong>&nbsp;元</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">账户金额:</label>
+            <div class="col-md-6 col-sm-10" >
+                <div style="margin-top: 5px;font-size: 16px"><strong style="color:#ff0000;">{$info.balance}</strong>&nbsp;元</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">个人地址:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" name="my_address" value="{$info.my_address}" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">商户店址:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" name="merchant_address" value="{$info.address}" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">展示图片:</label>
+            <div class="col-md-6 col-sm-10">
+                <div class="col-md-6 col-sm-10">
+            <notempty name="info.show_picture">
+                <a href="javascript:parent.imagePreviewDialog('{:cmf_get_image_preview_url($info.show_picture)}');">
+                    <i class="fa fa-photo fa-fw"></i>
+                </a>
+                <else/>
+                <i class="fa fa-close fa-fw"></i>
+            </notempty>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-offset-2 col-sm-10">
+            <a class="btn btn-default" href="__URL__">返回</a>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+<script>
+
+    //设置属性类型默认选中
+    $('input[name="sex"][value="'+sex+'"]').attr('radio',true);
+    //获取用户状态类型
+    var sex="{$info['user_status']}";
+    //设置用户状态默认选中
+    $('input[name="user_status"][value="'+user_status+'"]').attr('radio',true);
+</script>
+</html>
